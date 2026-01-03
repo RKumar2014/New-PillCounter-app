@@ -1,0 +1,56 @@
+/* EMERGENCY_FIX.css */
+/* Add this CSS to your existing styles to fix the tiny image issue */
+/* No JavaScript changes needed! */
+
+/* Fix the tiny canvas display */
+canvas {
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  display: block !important;
+  object-fit: contain !important;
+  margin: 0 auto !important;
+}
+
+/* Ensure the canvas container allows it to expand */
+.results-image-container,
+.image-container,
+[class*="image"],
+[class*="canvas-container"] {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+}
+
+/* Alternative: If the above doesn't work, try this more specific selector */
+div[style*="purple"] canvas,
+div[style*="#7c5cbf"] canvas,
+.results-screen canvas {
+  min-width: 90% !important;
+  width: 95% !important;
+  height: auto !important;
+  max-width: 95% !important;
+}
+
+/* Ensure canvas is not limited by transform or other properties */
+canvas[style*="transform"] {
+  transform: none !important;
+}
+
+/* Fix common scaling issues */
+canvas[width="640"],
+canvas[width="512"],
+canvas[height="640"],
+canvas[height="512"] {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* For debugging - temporarily add a red border to see canvas size */
+/* Uncomment to debug:
+canvas {
+  border: 3px solid red !important;
+}
+*/
