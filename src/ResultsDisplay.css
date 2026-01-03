@@ -1,0 +1,401 @@
+/* ResultsDisplay.css */
+/* Optimized styles for iPhone - Fixes Issue #3: Oversized results screen */
+
+.results-screen {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+    /* Dynamic viewport height for iOS */
+    width: 100vw;
+    overflow: hidden;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+}
+
+/* Header Section */
+.results-header {
+    flex-shrink: 0;
+    padding: max(env(safe-area-inset-top), 15px) 15px 15px 15px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.pill-count-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.count-number {
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.count-label {
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.95;
+}
+
+.results-info {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    padding: 8px;
+    background: #f5f5f5;
+    border-radius: 8px;
+}
+
+.info-label {
+    font-size: 11px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.info-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Image Container - Takes remaining space */
+.results-image-container {
+    flex: 1;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    min-height: 0;
+    /* Important for flex child with overflow */
+    background: rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+.results-canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    background: white;
+    touch-action: pinch-zoom;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+/* Canvas optimization for iOS */
+@supports (-webkit-touch-callout: none) {
+    .results-canvas {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+}
+
+.drawing-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 5;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.drawing-overlay p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.image-info-overlay {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    backdrop-filter: blur(5px);
+    pointer-events: none;
+    opacity: 0;
+    animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+
+    0%,
+    100% {
+        opacity: 0;
+    }
+
+    10%,
+    90% {
+        opacity: 1;
+    }
+}
+
+/* Action Buttons - Fixed at bottom */
+.results-actions {
+    flex-shrink: 0;
+    padding: 15px;
+    padding-bottom: max(env(safe-area-inset-bottom), 15px);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.action-button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.action-button:active {
+    transform: scale(0.97);
+}
+
+.action-button.primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.action-button.primary:hover {
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.action-button.secondary {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+}
+
+.action-button.secondary:hover {
+    box-shadow: 0 4px 12px rgba(245, 87, 108, 0.4);
+}
+
+.button-icon {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.button-text {
+    font-size: 15px;
+    white-space: nowrap;
+}
+
+/* Tips Section */
+.results-tips {
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.9);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.results-tips details {
+    padding: 12px 15px;
+}
+
+.results-tips summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: #667eea;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.results-tips summary::-webkit-details-marker {
+    display: none;
+}
+
+.results-tips summary::after {
+    content: '▼';
+    font-size: 10px;
+    margin-left: auto;
+    transition: transform 0.2s;
+}
+
+.results-tips details[open] summary::after {
+    transform: rotate(180deg);
+}
+
+.results-tips ul {
+    margin: 10px 0 0 0;
+    padding-left: 20px;
+    list-style: none;
+}
+
+.results-tips li {
+    position: relative;
+    padding: 6px 0;
+    padding-left: 24px;
+    font-size: 14px;
+    color: #555;
+}
+
+.results-tips li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+/* Responsive adjustments for smaller iPhones */
+@media (max-width: 375px) {
+    .count-number {
+        font-size: 36px;
+    }
+
+    .count-label {
+        font-size: 14px;
+    }
+
+    .button-text {
+        font-size: 14px;
+    }
+
+    .action-button {
+        padding: 14px 16px;
+    }
+}
+
+/* Landscape mode */
+@media (orientation: landscape) {
+    .results-screen {
+        flex-direction: row;
+    }
+
+    .results-header {
+        width: 250px;
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    .results-image-container {
+        flex: 1;
+    }
+
+    .results-actions {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: auto;
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .action-button {
+        width: 200px;
+    }
+}
+
+/* Prevent iOS Safari bounce scroll */
+.results-screen {
+    overscroll-behavior: none;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+
+    .spinner,
+    .action-button,
+    .results-tips summary::after {
+        animation: none;
+        transition: none;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+
+    .results-header,
+    .results-actions,
+    .results-tips {
+        background: rgba(30, 30, 30, 0.95);
+        color: #e0e0e0;
+    }
+
+    .info-item {
+        background: rgba(60, 60, 60, 0.5);
+    }
+
+    .info-label {
+        color: #aaa;
+    }
+
+    .info-value {
+        color: #e0e0e0;
+    }
+
+    .results-image-container {
+        background: rgba(0, 0, 0, 0.3);
+    }
+}
